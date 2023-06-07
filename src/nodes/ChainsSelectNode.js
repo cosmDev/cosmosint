@@ -43,18 +43,20 @@ export const DisplayChainsSelect = defineNode({
   calculate({ input1, input2 }) {
     console.log("input1", input1)
     let finalAddress = ""
+    let finalAddressTrunc = ""
     if (input1 !== "") {
       let bechDecode = bech32.decode(input1)  
       let convertTo = getCosmosConfig.find( ({ name }) => name === input2 )
   
       console.log("convertTo", convertTo)
-      finalAddress = truncate(bech32.encode(convertTo.coinLookup.addressPrefix, bechDecode.words))    
+      finalAddressTrunc = truncate(bech32.encode(convertTo.coinLookup.addressPrefix, bechDecode.words))  
+      finalAddress = bech32.encode(convertTo.coinLookup.addressPrefix, bechDecode.words)    
     }
 
 
 
     return {
-      value1: finalAddress,
+      value1: finalAddressTrunc,
       value2: finalAddress,
       value3: input2
     };
