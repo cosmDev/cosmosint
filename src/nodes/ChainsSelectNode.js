@@ -30,7 +30,7 @@ export const DisplayChainsSelect = defineNode({
   title: "Chains select",
   inputs: {
     input1: () => new NodeInterface("Wallet", ""),
-    input2: () => new SelectInterface("Select chain", 'Atom', finalChains)                   
+    input2: () => new SelectInterface("Select chain", 'Bitcanna testnet', finalChains)                   
   },
   outputs: { 
     value1: () => new TextInterface("Display", ""),

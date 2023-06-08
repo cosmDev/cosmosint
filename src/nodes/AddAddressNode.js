@@ -13,7 +13,7 @@ export const AddAddress = defineNode({
   },
 
   calculate({ Address }) { 
-    console.log("value1", Address);
+    console.log("connections", Address);
     if (typeof value1 !== "") {
       console.log(bech32.decode(Address))
     }

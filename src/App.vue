@@ -55,9 +55,7 @@ export default defineComponent({
       applyResult(result, baklava.editor);
       engine.resume();
     });
-
-    engine.start();
-
+ 
     // Add some nodes for demo purposes
     function addNodeWithCoordinates(nodeType, x, y) {
       const n = new nodeType();
@@ -66,13 +64,28 @@ export default defineComponent({
       n.position.y = y;
       return n;
     }
-    /* const node1 = addNodeWithCoordinates(DisplayChains, 550, 140);
-    const node2 = addNodeWithCoordinates(DisplayNode, 950, 140);
-    console.log(node1);
+    const demoWallet = addNodeWithCoordinates(AddAddress, 350, 140);
+    const node2 = addNodeWithCoordinates(DisplayChainsSelect, 650, 140);
+    const node3 = addNodeWithCoordinates(WalletNode, 1050, 140);
+    const node4 = addNodeWithCoordinates(DisplayNode, 1350, 140);
+     
     baklava.displayedGraph.addConnection(
-      node1.outputs['Bitcanna-testnet-1'],
-      node2.inputs.value
-    );   */    
+      demoWallet.outputs['value1'],
+      node2.inputs.input1
+    );
+    baklava.displayedGraph.addConnection(
+      node2.outputs['value2'],
+      node3.inputs.wallet
+    );    
+    baklava.displayedGraph.addConnection(
+      node2.outputs['value3'],
+      node3.inputs.chain
+    );     
+    baklava.displayedGraph.addConnection(
+      node3.outputs['walletAvailable'],
+      node4.inputs.value
+    );      
+    engine.start();
     return { baklava };
   }
 });

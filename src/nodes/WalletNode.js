@@ -32,7 +32,8 @@ export const WalletNode = defineNode({
     walletAvailable: () => new NodeInterface("Available", "")
   },
   async calculate({ wallet, chain }) {
-    let findChain = getCosmosConfig.find( ({ name }) => name === chain )
+    let findChain = getCosmosConfig.find(({ name }) => name === chain)
+    console.log("findChain", findChain)
     // Get wallet info
     const accountInfo = await axios(
       findChain.apiURL +
