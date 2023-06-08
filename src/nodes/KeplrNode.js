@@ -6,7 +6,7 @@ export const KeplrLogin = defineNode({
   inputs: {
   },
   outputs: { 
-    returnWallet: () => new NodeInterface("Value", "")  
+    returnWallet: () => new NodeInterface("Wallet", "")  
   },
 
   async calculate() {
