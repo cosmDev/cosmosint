@@ -19,16 +19,17 @@ import {
 } from "baklavajs";
 import "@baklavajs/themes/dist/classic.css";
 
-import { DisplayNode } from "./nodes/DisplayNode";
+// import { DisplayNode } from "./nodes/DisplayNode";
 import { MathNode } from "./nodes/MathNode";
 import { DisplayChains } from "./nodes/ChainsNode";
 import { DisplayChainsSelect } from "./nodes/ChainsSelectNode";
 import { AddAddress } from "./nodes/AddAddressNode";
 import { KeplrLogin } from "./nodes/KeplrNode";
 import { WalletNode } from "./nodes/WalletNode";
+import { InputNode } from "./nodes/base/InputNode";
+import { OutputNode } from "./nodes/base/OutputNode";
 // Cosmos SDK 
-import { MintModule } from "./nodes/cosmos-sdk/mint/MintNode";
-
+import { MintModule } from "./nodes/cosmos-sdk/mint/MintNode"; 
 
 export default defineComponent({
   components: {
@@ -38,13 +39,17 @@ export default defineComponent({
     const baklava = useBaklava();
     const engine = new DependencyEngine(baklava.editor);
 
+    baklava.editor.registerNodeType(InputNode, { category: "Base" });
+    baklava.editor.registerNodeType(OutputNode, { category: "Base" });
+    
     baklava.editor.registerNodeType(MathNode, { category: "Base" });
-    baklava.editor.registerNodeType(DisplayNode, { category: "Base" });
-    baklava.editor.registerNodeType(WalletNode, { category: "Base" });
+    // baklava.editor.registerNodeType(DisplayNode, { category: "Base" });
+    
     baklava.editor.registerNodeType(DisplayChains, { category: "Cosmos hub" });
     baklava.editor.registerNodeType(DisplayChainsSelect, { category: "Cosmos hub" });
     baklava.editor.registerNodeType(AddAddress, { category: "Cosmos connect" });
     baklava.editor.registerNodeType(KeplrLogin, { category: "Cosmos connect" });
+    baklava.editor.registerNodeType(WalletNode, { category: "Cosmos connect" });
     baklava.editor.registerNodeType(MintModule, { category: "Cosmos SDK" });
     
     
@@ -64,10 +69,10 @@ export default defineComponent({
       n.position.y = y;
       return n;
     }
-    const demoWallet = addNodeWithCoordinates(AddAddress, 350, 140);
-    const node2 = addNodeWithCoordinates(DisplayChainsSelect, 650, 140);
-    const node3 = addNodeWithCoordinates(WalletNode, 1050, 140);
-    const node4 = addNodeWithCoordinates(DisplayNode, 1350, 140);
+    const demoWallet = addNodeWithCoordinates(AddAddress, 350, 70);
+    const node2 = addNodeWithCoordinates(DisplayChainsSelect, 650, 500);
+    const node3 = addNodeWithCoordinates(WalletNode, 1050, 70);
+    const node4 = addNodeWithCoordinates(OutputNode, 1350, 500);
      
     baklava.displayedGraph.addConnection(
       demoWallet.outputs['value1'],

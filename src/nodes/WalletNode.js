@@ -21,7 +21,7 @@ function truncate(
 
 export const WalletNode = defineNode({
   type: "WalletNode",
-  title: "Wallet",
+  title: "Wallet viewer",
   inputs: {
     wallet: () => new NodeInterface("Wallet", ""),
     chain: () => new NodeInterface("Chain", "")
