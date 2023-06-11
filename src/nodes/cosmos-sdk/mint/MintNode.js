@@ -10,11 +10,9 @@ export const MintModule = defineNode({
   inputs: {
     getMint: () => new NodeInterface("Chain", "")
   },
-  outputs: { 
-    value1: () => new TextInterface("Name", ""),
-    value2: () => new NodeInterface("Value", ""),
-    value3: () => new TextInterface("Value", ""),
-    value4: () => new NodeInterface("Value", "")
+  outputs: {  
+    value2: () => new NodeInterface("Inflation (%)", ""),
+    value4: () => new NodeInterface("Annual provisions", "")
   },
 
   async calculate({ getMint }) {  
@@ -23,18 +21,16 @@ export const MintModule = defineNode({
     if (getMint !== "") {  
       let foundChain = getCosmosConfig.find( ({ name }) => name === getMint );   
       getInflation = await axios.get(foundChain.apiURL + '/cosmos/mint/v1beta1/inflation');
-      getInflation = (getInflation.data.inflation * 100).toFixed(2) + "%";
+      //getInflation = (getInflation.data.inflation * 100).toFixed(2);
+      getInflation = Number(getInflation.data.inflation).toFixed(4);
 
       let provisions = await axios.get(foundChain.apiURL + '/cosmos/mint/v1beta1/annual_provisions');
-      getAnnualProvisions = (provisions.data.annual_provisions / 1000000).toFixed(2) + " " + foundChain.coinLookup.viewDenom;
-      console.log(provisions.data.annual_provisions)
+      getAnnualProvisions = (provisions.data.annual_provisions / 1000000).toFixed(2) + " " + foundChain.coinLookup.viewDenom; 
       
     }
     
-    return {
-      value1: String(getMint) + ' inflation',
+    return { 
       value2: getInflation,
-      value3: 'Annual provisions',
       value4: getAnnualProvisions
     };
   }

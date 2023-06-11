@@ -24,40 +24,50 @@ export const WalletNode = defineNode({
   title: "Wallet viewer",
   inputs: {
     wallet: () => new NodeInterface("Wallet", ""),
-    chain: () => new NodeInterface("Chain", "")
+    chain: () => new NodeInterface("Chain", ""),
+    price: () => new NodeInterface("Price", "")
   },
   outputs: {
     displayWallet: () => new TextInterface("Display", ""),
     displayChain: () => new TextInterface("Display", ""),
-    walletAvailable: () => new NodeInterface("Available", "")
+    walletAvailable: () => new NodeInterface("Available", ""),
+    walletFiat: () => new NodeInterface("Value", "")
   },
-  async calculate({ wallet, chain }) {
-    let findChain = getCosmosConfig.find(({ name }) => name === chain)
-    console.log("findChain", findChain)
-    // Get wallet info
-    const accountInfo = await axios(
-      findChain.apiURL +
-        "/cosmos/bank/v1beta1/spendable_balances/" +
-        wallet
-    );
-    let foundAccountInfo = accountInfo.data.balances.find(
-      (element) =>
-        element.denom === findChain.coinLookup.chainDenom
-    );
-
-    if (typeof foundAccountInfo === "undefined") {
-      foundAccountInfo = {
-        denom: findChain.coinLookup.chainDenom,
-        amount: "0",
+  async calculate({ wallet, chain, price }) {
+    if(wallet && chain) {
+      let findChain = await getCosmosConfig.find(({ name }) => name === chain)  
+      // Get wallet info
+      const accountInfo = await axios(
+        findChain.apiURL +
+          "/cosmos/bank/v1beta1/spendable_balances/" +
+          wallet
+      );
+      let foundAccountInfo = accountInfo.data.balances.find(
+        (element) =>
+          element.denom === findChain.coinLookup.chainDenom
+      );
+  
+      if (typeof foundAccountInfo === "undefined") {
+        foundAccountInfo = {
+          denom: findChain.coinLookup.chainDenom,
+          amount: "0",
+        };
+      }
+      return {
+        displayWallet: truncate(wallet),
+        displayChain: String(chain),
+        walletAvailable: (foundAccountInfo.amount / 1000000).toFixed(4) + ' ' + findChain.coinLookup.viewDenom,
+        walletFiat: '$' + (foundAccountInfo.amount / 1000000).toFixed(4) * price
+      };
+    } else {
+      return {
+        displayWallet: 'No wallet selected',
+        displayChain: 'No chain selected',
+        walletAvailable: '0',
+        walletFiat: '0'
       };
     }
 
-
-    return {
-      displayWallet: truncate(wallet),
-      displayChain: String(chain),
-      walletAvailable: (foundAccountInfo.amount / 1000000).toFixed(4) + ' ' + findChain.coinLookup.viewDenom
-    };
   }
 });
  

@@ -1,10 +1,10 @@
 import { defineNode, NodeInterface, TextInterface, TextInputInterface, NumberInterface, SelectInterface } from "baklavajs";
 import { bech32 } from "bech32";
 
-export const AddAddress = defineNode({
+export const ComboAddress = defineNode({
  
-  type: "AddAddress",
-  title: "Add address",
+  type: "ComboAddress",
+  title: "Combo address",
   inputs: {
     Address: () => new TextInputInterface("Name", "cosmos13jawsn574rf3f0u5rhu7e8n6sayx5gkwjvqrkr") 
   },
@@ -13,7 +13,6 @@ export const AddAddress = defineNode({
   },
 
   calculate({ Address }) { 
-    // console.log("connections", Address);
     /* if (typeof value1 !== "") {
       console.log(bech32.decode(Address))
     } */

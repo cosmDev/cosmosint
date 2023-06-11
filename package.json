@@ -14,9 +14,13 @@
     "axios": "^1.4.0",
     "baklavajs": "2.0.2-beta.3",
     "bech32": "^2.0.0",
-    "vue": "^3.3.2"
+    "mdi": "^2.2.43",
+    "vue": "^3.3.2",
+    "vuetify": "^3.3.2",
+    "vuex": "^4.0.2"
   },
   "devDependencies": {
+    "@mdi/font": "^7.2.96",
     "@tsconfig/node18": "^2.0.1",
     "@types/node": "^18.16.8",
     "@vitejs/plugin-vue": "^4.2.3",
