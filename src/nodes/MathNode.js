@@ -10,7 +10,7 @@ export const MathNode = defineNode({
   title: "Math",
   inputs: {
     operation: () =>
-      new SelectInterface("Operation", "Add", ["Add", "Subtract"]).setPort(
+      new SelectInterface("Operation", "Add", ["Add", "Subtract", "Multiply"]).setPort(
         false
       ),
     num1: () => new NumberInterface("Num 1", 1),
@@ -22,6 +22,8 @@ export const MathNode = defineNode({
   calculate({ num1, num2, operation }) {
     if (operation === "Add") {
       return { result: num1 + num2 };
+    } else if (operation === "Multiply") {
+      return { result: num1 * num2 };
     } else {
       return { result: num1 - num2 };
     }
